@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Branch Dashboard{% endblock %}
+
+{% block content %}
+<h2 class="text-center">Branch Dashboard</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Reference Number</th>
+            <th>Subject</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for file in files %}
+        <tr>
+            <td>{{ file.reference_number }}</td>
+            <td>{{ file.subject }}</td>
+            <td>{{ file.description }}</td>
+            <td>
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" name="action" value="processed" class="btn btn-success btn-sm">Take Action</button>
+                    <button type="submit" name="action" value="forwarded" class="btn btn-warning btn-sm">Forward</button>
+                </form>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4" class="text-center">No files assigned to this branch</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
