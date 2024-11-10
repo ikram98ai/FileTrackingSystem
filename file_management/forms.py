@@ -23,6 +23,8 @@ class SignUpForm(UserCreationForm):
         return user
 
 class FileUploadForm(forms.ModelForm):
+    from_department = forms.ModelChoiceField(queryset=Department.objects.all(), empty_label="Select Department")
+    to_department = forms.ModelChoiceField(queryset=Department.objects.all(), empty_label="Select Department")
     class Meta:
         model = File
         fields = ['file_name', 'file_data', 'file_type', 'priority', 'purpose', 'from_department', 'to_department', 'file_source', 'subject', 'description']

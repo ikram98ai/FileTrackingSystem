@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'file_management',
     'rest_framework',
     'django_bootstrap5',
+    'widget_tweaks',
+
+
 ]
 
 MIDDLEWARE = [
@@ -116,7 +119,7 @@ USE_I18N = True
 USE_TZ = True
 
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'admin_dashboard'
+LOGIN_REDIRECT_URL = 'home' 
 LOGOUT_REDIRECT_URL = 'login'
 
 
