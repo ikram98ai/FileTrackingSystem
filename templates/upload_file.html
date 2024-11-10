@@ -1,16 +1,103 @@
 {% extends 'base.html' %}
 
-{% block title %}Upload File{% endblock %}
+{% block title %}Upload New File{% endblock %}
 
 {% block content %}
-<h2 class="text-center">Upload New File</h2>
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary w-100">Upload File</button>
-        </form>
+<div class="container">
+    <div class="row justify-content-center align-items-center min-vh-100">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0">
+                <div class="card-body">
+                    <h3 class="text-center mb-4">Upload New File</h3>
+                    
+                    <!-- Display any form errors -->
+                    {% if form.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        <ul class="mb-0">
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                            {% for error in form.non_field_errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <!-- Custom form fields with Bootstrap styling -->
+                        <div class="mb-3">
+                            <label for="id_file" class="form-label">Select File</label>
+                            <input type="file" class="form-control" id="id_file" name="file" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_file_type" class="form-label">File Type</label>
+                            <select class="form-select" id="id_file_type" name="file_type">
+                                <option value="general">General</option>
+                                <option value="confidential">Confidential</option>
+                                <option value="financial">Financial</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="id_priority" class="form-label">Priority</label>
+                            <select class="form-select" id="id_priority" name="priority">
+                                <option value="normal">Normal</option>
+                                <option value="urgent">Urgent</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_from_department" class="form-label">From Department</label>
+                            <input type="text" class="form-control" id="id_from_department" name="from_department" placeholder="e.g. HR, Finance" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_to_department" class="form-label">To Department</label>
+                            <input type="text" class="form-control" id="id_to_department" name="to_department" placeholder="e.g. IT, Legal" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_subject" class="form-label">Subject</label>
+                            <input type="text" class="form-control" id="id_subject" name="subject" placeholder="Enter a brief subject" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_description" class="form-label">Description</label>
+                            <textarea class="form-control" id="id_description" name="description" rows="4" placeholder="Provide a detailed description" required></textarea>
+                        </div>
+                        
+                        <!-- Submit Button -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Upload File</button>
+                        </div>
+                    </form>
+                    
+                    <!-- Back Button -->
+                    <div class="text-center mt-3">
+                        <a href="{% url 'admin_dashboard' %}" class="text-decoration-none">Go Back to Dashboard</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+<!-- Custom Styles -->
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+    .card {
+        border-radius: 12px;
+    }
+    .form-control, .form-select {
+        border-radius: 8px;
+    }
+</style>
 {% endblock %}

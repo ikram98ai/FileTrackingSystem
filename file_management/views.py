@@ -13,16 +13,15 @@ def sign_up(request):
         if form.is_valid():
             user = form.save()
             
-            # Create a profile for branch users
-            if not user.is_staff:
-                department = form.cleaned_data.get('department')
-                Profile.objects.create(user=user, department=department)
+            department = form.cleaned_data.get('department')
+            Profile.objects.create(user=user, department=department)
             
             login(request, user)  # Log the user in after sign-up
-            return redirect('admin_dashboard' if user.is_staff else 'branch_dashboard')
+            return redirect('branch_dashboard')
     else:
         form = SignUpForm()
     return render(request, 'sign_up.html', {'form': form})
+
 # Check if user is admin
 def is_admin(user):
     return user.is_staff
@@ -56,7 +55,7 @@ def admin_dashboard(request):
 
 @login_required
 def branch_dashboard(request):
-    files = File.objects.filter(to_department__name=request.user.profile.department.name, status='Pending')
+    files = File.objects.filter(to_department__name=request.user.profile.department.name)
     return render(request, 'branch_dashboard.html', {'files': files})
 
 @login_required

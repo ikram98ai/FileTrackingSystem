@@ -39,15 +39,10 @@
                                placeholder="Confirm your password">
                     </div>
                     
-                    <!-- Register as Admin Checkbox -->
-                    <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" id="is_staff" name="is_staff">
-                        <label class="form-check-label" for="is_staff">Register as Admin</label>
-                    </div>
 
                     <!-- Department Dropdown -->
                     <div class="mb-3">
-                        <label for="department" class="form-label">Department (for Branch Users)</label>
+                        <label for="department" class="form-label">Department</label>
                         <select class="form-select" id="department" name="department">
                             <option value="" selected>Choose your department...</option>
                             {% for dept in form.fields.department.queryset %}

@@ -7,15 +7,16 @@ import uuid
 class Department(models.Model):
     name = models.CharField(max_length=100)
 
+    def __str__(self) -> str:
+        return self.name
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE,related_name='profile')
-    department = models.ForeignKey(Department, null=True, blank=True, on_delete=models.SET_NULL)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.user.username}'s Profile"
-    def __str__(self):
-        return self.name
+
 
 class File(models.Model):
     PRIORITY_CHOICES = [('Normal', 'Normal'), ('Urgent', 'Urgent')]
@@ -26,7 +27,7 @@ class File(models.Model):
     file_type = models.CharField(max_length=50)
     priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES)
     purpose = models.TextField()
-    from_department = models.ForeignKey(Department, related_name='sent_files', on_delete=models.CASCADE)
+    from_department = models.ForeignKey(Department, related_name='sent_files',  null=True, blank=True, on_delete=models.CASCADE)
     to_department = models.ForeignKey(Department, related_name='received_files', on_delete=models.CASCADE)
     file_source = models.CharField(max_length=100)
     subject = models.CharField(max_length=200)

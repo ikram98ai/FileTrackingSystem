@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import File, Department
+from .models import File, Department, Profile
 
 @admin.register(File)
 class FileModelAdmin(admin.ModelAdmin):
@@ -11,3 +11,9 @@ class FileModelAdmin(admin.ModelAdmin):
 class DepartmentModelAdmin(admin.ModelAdmin):
     list_display = ['id', 'name']
     ordering = ['name']
+
+
+@admin.register(Profile)
+class ProfileModelAdmin(admin.ModelAdmin):
+    list_display = ['id', 'user', 'department']
+    ordering = ['user']

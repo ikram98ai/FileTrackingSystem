@@ -5,11 +5,6 @@ from .models import Department, File
 
 class SignUpForm(UserCreationForm):
     email = forms.EmailField(required=True)
-    is_staff = forms.BooleanField(
-        required=False,
-        label='Register as Admin',
-        help_text='Check this if you are registering as an admin'
-    )
     department = forms.ModelChoiceField(
         queryset=Department.objects.all(),
         required=False,
@@ -18,12 +13,11 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2', 'is_staff', 'department']
+        fields = ['username', 'email', 'password1', 'password2', 'department']
 
     def save(self, commit=True):
         user = super().save(commit=False)
         user.email = self.cleaned_data['email']
-        user.is_staff = self.cleaned_data['is_staff']
         if commit:
             user.save()
         return user
